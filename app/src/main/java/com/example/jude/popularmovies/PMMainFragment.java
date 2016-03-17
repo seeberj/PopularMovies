@@ -2,9 +2,11 @@ package com.example.jude.popularmovies;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,6 +76,11 @@ public class PMMainFragment extends Fragment {
                 MovieInfo m = movieInfoAdapter.getItem(position);
                 //Toast.makeText(getActivity(), m.title, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                //http://stackoverflow.com/questions/8452526/android-can-i-use-putextra-to-pass-multiple-values
+                Bundle extras = new Bundle();
+                extras.putString("EXTRA_TITLE", m.title);
+                extras.putString("EXTRA_SYNOPSIS", m.synopsis);
+                intent.putExtras(extras);
                 startActivity(intent);
             }
         });
@@ -83,7 +90,9 @@ public class PMMainFragment extends Fragment {
 
     private void updateMovies() {
       FetchMoviesTask moviesTask = new FetchMoviesTask();
-      moviesTask.execute("None");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String sortBy = prefs.getString("Order","popular");
+      moviesTask.execute(sortBy);
     }
 
     @Override
@@ -121,18 +130,12 @@ public class PMMainFragment extends Fragment {
                         singleMovieInfo.getDouble(MDB_USER_RATING),
                         singleMovieInfo.getString(MDB_REL_DATE)));
 
-//                movieInfo[i].setPosterThumbnail("http://image.tmdb.org/t/p/w185//kqjL17yufvn9OVLyXYpvtyrFfak");//+ singleMovieInfo.getString(MDB_POSTER);
-//                movieInfo[i].setSynopsis(singleMovieInfo.getString(MDB_OVERVIEW));
-//                movieInfo[i].setTitle(singleMovieInfo.getString(MDB_ORIGINAL_TITLE));
-//                movieInfo[i].releaseDate     = singleMovieInfo.getString(MDB_REL_DATE);
-//                movieInfo[i].userRating      = singleMovieInfo.getDouble(MDB_USER_RATING);
             }
             return movieInfo;
         }
 
         @Override
         protected List<MovieInfo> doInBackground(String... params) {
-            // If there's no zip code, there's nothing to look up.  Verify size of params.
             if (params.length == 0) {
                 return null;
             }
@@ -146,18 +149,21 @@ public class PMMainFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String moviesJsonStr = null;
             String popularity = "popularity.desc";
+            String popular = "popular";
+            String top_rated = "top_rated";
 
             try {
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                final String MOVIEDB_POPULAR_BASE_URL = "http://api.themoviedb.org/3/discover/movie??";
+                //final String MOVIEDB_POPULAR_BASE_URL = "http://api.themoviedb.org/3/discover/movie??";
+                final String MOVIEDB_POPULAR_BASE_URL = "http://api.themoviedb.org/3/movie/" + params[0] +"?";
 
                 final String API_KEY_PARAM = "api_key";
                 final String SORT_BY_PARAM = "sort_by";
                 Uri builtMovieUri = Uri.parse(MOVIEDB_POPULAR_BASE_URL).buildUpon()
-                        .appendQueryParameter(API_KEY_PARAM, BuildConfig.MOVIE_DB_API_KEY)
-                        .appendQueryParameter(SORT_BY_PARAM, popularity).build();
+                        .appendQueryParameter(API_KEY_PARAM, BuildConfig.MOVIE_DB_API_KEY).build();
+                        //.appendQueryParameter(SORT_BY_PARAM, params[0]).build();
 
                 URL movieUrl = new URL(builtMovieUri.toString());
 

@@ -30,7 +30,7 @@ public class MovieInfoAdapter extends ArrayAdapter<MovieInfo> {
         }
         ImageView posterImage = (ImageView) convertView.findViewById(R.id.poster_image);
 
-        Picasso.with(getContext()).load(movieInfo.posterThumbnail).placeholder(R.drawable.icecream).into(posterImage);
+        Picasso.with(getContext()).load(movieInfo.posterThumbnail).into(posterImage);
 
         //posterImage.setImageResource(movieInfo.posterImage);
 

@@ -6,9 +6,19 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_settings">Settings</string>
 
-    <string name="movie_title">Move Title</string>
-    <string name="movie_synopsys">Move Synopsys</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_synopsys">Movie Synopsys</string>
+
+    <string name="pref_sort_label">Sorting</string>
+    <string name="pref_sort_key">Order</string>
+
+    <string name="pref_sort_label_popular">Most Popular</string>
+    <string name="pref_sort_label_rating">Top Rating</string>
+
+    <string name="pref_sort_popular" translatable="false">popular</string>
+    <string name="pref_sort_rating" translatable="false">top_rated</string>
 
 </resources>
 

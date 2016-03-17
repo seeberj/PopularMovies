@@ -1,8 +1,5 @@
 package com.example.jude.popularmovies;
 
-import java.net.URL;
-import java.util.Date;
-
 /**
  * Created by Jude on 3/6/2016.
  * original title
@@ -71,7 +68,7 @@ public class MovieInfo {
         this.title           = title;
         this.posterThumbnail = posterThumbnail;
         this.synopsis        = synopsis;
-        this.userRating      =  userRating;
+        this.userRating      = userRating;
         this.releaseDate     = releaseDate;
     }
 

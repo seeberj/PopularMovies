@@ -6,17 +6,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.jude.popularmovies.DetailActivityFragment"
-    >
+    tools:context="com.example.jude.popularmovies.DetailActivityFragment">
 
 
-    <TextView android:text="@string/movie_title" android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/movie_title_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/movie_title_textview"/>
+        android:text="@string/movie_title" />
 
-    <TextView android:text="@string/movie_synopsys" android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/movie_synopsis_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/movie_title_textview"/>
+        android:layout_below="@+id/movie_title_textview"
+        android:text="@string/movie_synopsys" />
 
 
 </RelativeLayout>
