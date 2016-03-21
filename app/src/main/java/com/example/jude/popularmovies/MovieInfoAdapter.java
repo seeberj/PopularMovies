@@ -32,8 +32,6 @@ public class MovieInfoAdapter extends ArrayAdapter<MovieInfo> {
 
         Picasso.with(getContext()).load(movieInfo.posterThumbnail).into(posterImage);
 
-        //posterImage.setImageResource(movieInfo.posterImage);
-
         return convertView;
 
     }

@@ -38,16 +38,16 @@ public class PMMainFragment extends Fragment {
     private MovieInfoAdapter movieInfoAdapter;
 
     MovieInfo[] movieInfos = {
-            new MovieInfo("A","http://image.tmdb.org/t/p/w185//inVq3FRqcYIRl2la8iZikYYxFNR.jpg", "Stuff", 1.0,"2016"),
-            new MovieInfo("B","http://image.tmdb.org/t/p/w185//inVq3FRqcYIRl2la8iZikYYxFNR.jpg", "Stuff", 2.0,"2016"),
-            new MovieInfo("C","http://image.tmdb.org/t/p/w185//kqjL17yufvn9OVLyXYpvtyrFfak.jpg", "Stuff", 3.0,"2016"),
-            new MovieInfo("D","http://image.tmdb.org/t/p/w185//jjBgi2r5cRt36xF6iNUEhzscEcb.jpg", "Stuff", 4.0,"2016"),
-            new MovieInfo("E","http://image.tmdb.org/t/p/w185//5W794ugjRwYx6IdFp1bXJqqMWRg.jpg", "Stuff", 5.0,"2016"),
-            new MovieInfo("F","http://image.tmdb.org/t/p/w185//hE24GYddaxB9MVZl1CaiI86M3kp.jpg", "Stuff", 6.0,"2016"),
-            new MovieInfo("G","http://image.tmdb.org/t/p/w185//p11Ftd4VposrAzthkhF53ifYZRl.jpg", "Stuff", 7.0,"2016"),
-            new MovieInfo("H","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff", 8.0,"2016"),
-            new MovieInfo("I","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff", 9.0,"2016"),
-            new MovieInfo("J","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff", 10.0,"2016"),
+            new MovieInfo("A","http://image.tmdb.org/t/p/w185//inVq3FRqcYIRl2la8iZikYYxFNR.jpg", "Stuff","1.0","2016"),
+            new MovieInfo("B","http://image.tmdb.org/t/p/w185//inVq3FRqcYIRl2la8iZikYYxFNR.jpg", "Stuff","2.0","2016"),
+            new MovieInfo("C","http://image.tmdb.org/t/p/w185//kqjL17yufvn9OVLyXYpvtyrFfak.jpg", "Stuff","3.0","2016"),
+            new MovieInfo("D","http://image.tmdb.org/t/p/w185//jjBgi2r5cRt36xF6iNUEhzscEcb.jpg", "Stuff","4.0","2016"),
+            new MovieInfo("E","http://image.tmdb.org/t/p/w185//5W794ugjRwYx6IdFp1bXJqqMWRg.jpg", "Stuff","5.0","2016"),
+            new MovieInfo("F","http://image.tmdb.org/t/p/w185//hE24GYddaxB9MVZl1CaiI86M3kp.jpg", "Stuff","6.0","2016"),
+            new MovieInfo("G","http://image.tmdb.org/t/p/w185//p11Ftd4VposrAzthkhF53ifYZRl.jpg", "Stuff","7.0","2016"),
+            new MovieInfo("H","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff","8.0","2016"),
+            new MovieInfo("I","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff","9.0","2016"),
+            new MovieInfo("J","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff","10.0","2016"),
     };
 
 
@@ -80,6 +80,9 @@ public class PMMainFragment extends Fragment {
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_TITLE", m.title);
                 extras.putString("EXTRA_SYNOPSIS", m.synopsis);
+                extras.putString("EXTRA_RELEASE_DATE", m.releaseDate);
+                extras.putString("EXTRA_POSTER", m.posterThumbnail);
+                extras.putString("EXTRA_USER_RATING", m.userRating);
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -127,9 +130,8 @@ public class PMMainFragment extends Fragment {
                 movieInfo.add(new MovieInfo(singleMovieInfo.getString(MDB_ORIGINAL_TITLE),
                         "http://image.tmdb.org/t/p/w185/" + singleMovieInfo.getString(MDB_POSTER),
                         singleMovieInfo.getString(MDB_OVERVIEW),
-                        singleMovieInfo.getDouble(MDB_USER_RATING),
+                        singleMovieInfo.getString(MDB_USER_RATING),
                         singleMovieInfo.getString(MDB_REL_DATE)));
-
             }
             return movieInfo;
         }
