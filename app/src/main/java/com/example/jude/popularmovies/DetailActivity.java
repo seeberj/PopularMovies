@@ -13,7 +13,6 @@ public class DetailActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.detail_container, new DetailActivityFragment())
                     .commit();
         }
-
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
