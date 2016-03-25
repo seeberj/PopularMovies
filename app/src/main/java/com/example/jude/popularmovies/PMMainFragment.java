@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -37,20 +36,6 @@ public class PMMainFragment extends Fragment {
 
     private MovieInfoAdapter movieInfoAdapter;
 
-    MovieInfo[] movieInfos = {
-            new MovieInfo("A","http://image.tmdb.org/t/p/w185//inVq3FRqcYIRl2la8iZikYYxFNR.jpg", "Stuff","1.0","2016"),
-            new MovieInfo("B","http://image.tmdb.org/t/p/w185//inVq3FRqcYIRl2la8iZikYYxFNR.jpg", "Stuff","2.0","2016"),
-            new MovieInfo("C","http://image.tmdb.org/t/p/w185//kqjL17yufvn9OVLyXYpvtyrFfak.jpg", "Stuff","3.0","2016"),
-            new MovieInfo("D","http://image.tmdb.org/t/p/w185//jjBgi2r5cRt36xF6iNUEhzscEcb.jpg", "Stuff","4.0","2016"),
-            new MovieInfo("E","http://image.tmdb.org/t/p/w185//5W794ugjRwYx6IdFp1bXJqqMWRg.jpg", "Stuff","5.0","2016"),
-            new MovieInfo("F","http://image.tmdb.org/t/p/w185//hE24GYddaxB9MVZl1CaiI86M3kp.jpg", "Stuff","6.0","2016"),
-            new MovieInfo("G","http://image.tmdb.org/t/p/w185//p11Ftd4VposrAzthkhF53ifYZRl.jpg", "Stuff","7.0","2016"),
-            new MovieInfo("H","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff","8.0","2016"),
-            new MovieInfo("I","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff","9.0","2016"),
-            new MovieInfo("J","http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg", "Stuff","10.0","2016"),
-    };
-
-
     public PMMainFragment() {
         // Required empty public constructor
     }
@@ -59,12 +44,10 @@ public class PMMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_pmmain, container, false);
 
-        //http://stackoverflow.com/questions/31842150/custom-adapter-does-not-clear-should-i-override
-
-        movieInfoAdapter = new MovieInfoAdapter(getActivity(), new ArrayList<> (Arrays.asList(movieInfos)));
-        // Inflate the layout for this fragment
+        movieInfoAdapter = new MovieInfoAdapter(getActivity());
 
         GridView gridView = (GridView) rootView.findViewById(R.id.movies_grid);
         gridView.setAdapter(movieInfoAdapter);
@@ -74,8 +57,10 @@ public class PMMainFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MovieInfo m = movieInfoAdapter.getItem(position);
-                //Toast.makeText(getActivity(), m.title, Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                //Use a Bundle to pass movie details to the Detail Activity
+
                 //http://stackoverflow.com/questions/8452526/android-can-i-use-putextra-to-pass-multiple-values
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_TITLE", m.title);
@@ -91,6 +76,7 @@ public class PMMainFragment extends Fragment {
         return rootView;
     }
 
+    //Call the
     private void updateMovies() {
       FetchMoviesTask moviesTask = new FetchMoviesTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -150,26 +136,19 @@ public class PMMainFragment extends Fragment {
 
             // Will contain the raw JSON response as a string.
             String moviesJsonStr = null;
-            String popularity = "popularity.desc";
-            String popular = "popular";
-            String top_rated = "top_rated";
 
             try {
-                // Construct the URL for the OpenWeatherMap query
-                // Possible parameters are avaiable at OWM's forecast API page, at
-                // http://openweathermap.org/API#forecast
-                //final String MOVIEDB_POPULAR_BASE_URL = "http://api.themoviedb.org/3/discover/movie??";
+                // Construct the URL for the MovieDB query
                 final String MOVIEDB_POPULAR_BASE_URL = "http://api.themoviedb.org/3/movie/" + params[0] +"?";
 
                 final String API_KEY_PARAM = "api_key";
-                final String SORT_BY_PARAM = "sort_by";
+
                 Uri builtMovieUri = Uri.parse(MOVIEDB_POPULAR_BASE_URL).buildUpon()
                         .appendQueryParameter(API_KEY_PARAM, BuildConfig.MOVIE_DB_API_KEY).build();
-                        //.appendQueryParameter(SORT_BY_PARAM, params[0]).build();
 
                 URL movieUrl = new URL(builtMovieUri.toString());
 
-                Log.v(LOG_TAG, "Built MOVIE URI " + builtMovieUri.toString());
+               // Log.v(LOG_TAG, "Built MOVIE URI " + builtMovieUri.toString());
 
 
                 // Create the request to MovieDB, and open the connection
@@ -220,7 +199,7 @@ public class PMMainFragment extends Fragment {
             }
 
             try {
-                return getMovieInfoFromJson(moviesJsonStr); //, numDays);
+                return getMovieInfoFromJson(moviesJsonStr);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();

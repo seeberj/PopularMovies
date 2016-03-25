@@ -19,6 +19,9 @@ public class MovieInfoAdapter extends ArrayAdapter<MovieInfo> {
     public MovieInfoAdapter(Activity context, List<MovieInfo> movieInfoList) {
         super(context, 0, movieInfoList);
     }
+    public MovieInfoAdapter(Activity context) {
+        super(context, 0);
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {

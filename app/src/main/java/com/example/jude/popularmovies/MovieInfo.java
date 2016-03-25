@@ -2,11 +2,13 @@ package com.example.jude.popularmovies;
 
 /**
  * Created by Jude on 3/6/2016.
- * original title
- * movie poster image thumbnail
+ *
+ * The MovieInfo class needs to contain the following details about the movie
+ * Original title
+ * Link movie poster image thumbnail
  * A plot synopsis (called overview in the api)
- * user rating (called top_rated in the api)
- * release date
+ * The user rating (called top_rated in the api)
+ * The release date
  */
 public class MovieInfo {
 
