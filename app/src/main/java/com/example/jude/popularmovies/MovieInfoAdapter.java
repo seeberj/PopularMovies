@@ -32,7 +32,7 @@ public class MovieInfoAdapter extends ArrayAdapter<MovieInfo> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_item,parent,false);
         }
         ImageView posterImage = (ImageView) convertView.findViewById(R.id.poster_image);
-
+        //Using picasso for efficient loading of images
         Picasso.with(getContext()).load(movieInfo.posterThumbnail).into(posterImage);
 
         return convertView;

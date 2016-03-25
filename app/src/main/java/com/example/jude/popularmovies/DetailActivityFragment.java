@@ -32,6 +32,7 @@ public class DetailActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         Intent intent = getActivity().getIntent();
         if (intent != null){
+            //Extract the movie details from the bundle
             Bundle extras = intent.getExtras();
             mTitle = extras.getString("EXTRA_TITLE");
             mPoster = extras.getString("EXTRA_POSTER");
@@ -39,6 +40,7 @@ public class DetailActivityFragment extends Fragment {
             mUserRating = extras.getString("EXTRA_USER_RATING");
             mSynopsis = extras.getString("EXTRA_SYNOPSIS");
 
+            //Set the views with the extracted info
             ((TextView) rootView.findViewById(R.id.movie_title_textview)).setText(mTitle);
             ImageView iView = (ImageView) rootView.findViewById(R.id.movie_poster_imageview);
             Picasso.with(getActivity()).load(mPoster).into(iView);

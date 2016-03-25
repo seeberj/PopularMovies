@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+//Popular Movies Main Fragment
+//The techniques used in this class were learned through the
+//Udacity course "Developing Android Apps"
 public class PMMainFragment extends Fragment {
 
     private MovieInfoAdapter movieInfoAdapter;
@@ -62,6 +62,7 @@ public class PMMainFragment extends Fragment {
                 //Use a Bundle to pass movie details to the Detail Activity
 
                 //http://stackoverflow.com/questions/8452526/android-can-i-use-putextra-to-pass-multiple-values
+                //Send the movie info to the detailed activity using a Bundle
                 Bundle extras = new Bundle();
                 extras.putString("EXTRA_TITLE", m.title);
                 extras.putString("EXTRA_SYNOPSIS", m.synopsis);
@@ -76,7 +77,8 @@ public class PMMainFragment extends Fragment {
         return rootView;
     }
 
-    //Call the
+    //Call the background task to get the info about the movies
+    //based on the preference ( popularity or user rating)
     private void updateMovies() {
       FetchMoviesTask moviesTask = new FetchMoviesTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -93,6 +95,7 @@ public class PMMainFragment extends Fragment {
     public class FetchMoviesTask extends AsyncTask<String, Void, List<MovieInfo>> {
         private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
 
+        //Extract the movie info from the JSON string
         private List<MovieInfo> getMovieInfoFromJson(String movieListInfoJsonStr)
                 throws JSONException
         {
@@ -106,7 +109,7 @@ public class PMMainFragment extends Fragment {
             JSONObject movieListInfoJson = new JSONObject(movieListInfoJsonStr);
             JSONArray movieArray = movieListInfoJson.getJSONArray(MDB_RESULTS);
 
-            Log.v(LOG_TAG, "Number of movies found" + movieArray.length());
+            //Log.v(LOG_TAG, "Number of movies found" + movieArray.length());
             List<MovieInfo> movieInfo = new ArrayList<MovieInfo> ();
 
             for(int i = 0; i < movieArray.length(); i++) {
@@ -150,7 +153,6 @@ public class PMMainFragment extends Fragment {
 
                // Log.v(LOG_TAG, "Built MOVIE URI " + builtMovieUri.toString());
 
-
                 // Create the request to MovieDB, and open the connection
                 urlConnection = (HttpURLConnection) movieUrl.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -179,11 +181,10 @@ public class PMMainFragment extends Fragment {
                 }
                 moviesJsonStr = buffer.toString();
 
-                Log.v(LOG_TAG, "Movie string: " + moviesJsonStr);
+             //   Log.v(LOG_TAG, "Movie string: " + moviesJsonStr);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
+
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -209,6 +210,7 @@ public class PMMainFragment extends Fragment {
             return null;
         }
 
+        //After the thread has executed, repopulate the adapter
         @Override
         protected void onPostExecute(List<MovieInfo> movieInfos) {
             if(movieInfos.size() > 0){
@@ -219,7 +221,5 @@ public class PMMainFragment extends Fragment {
             }
         }
     }
-
-
 
 }
