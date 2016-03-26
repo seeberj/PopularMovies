@@ -3,7 +3,6 @@ package com.example.jude.popularmovies;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,6 @@ public class DetailActivityFragment extends Fragment {
             Picasso.with(getActivity()).load(mPoster).into(iView);
             ((TextView) rootView.findViewById(R.id.release_date_textview)).setText(mReleaseDate);
             ((TextView) rootView.findViewById(R.id.user_rating_textview)).setText(mUserRating + "/10");
-            Log.e("MovieDetails", mSynopsis);
             ((TextView) rootView.findViewById(R.id.movie_synopsis_textview)).setText(mSynopsis);
 
         }

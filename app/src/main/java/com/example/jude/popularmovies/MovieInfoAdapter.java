@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +38,18 @@ public class MovieInfoAdapter extends ArrayAdapter<MovieInfo> {
 
         return convertView;
 
+    }
+
+    // Adding this method to support getting and saving the instance state of the main fragment
+    // https://discussions.udacity.com/t/onsaveinstancestate-and-parcelable-question-suggestions-before-i-start-project-2/39475
+    public ArrayList<MovieInfo> getMovieInfoArrayList(){
+        int numItems = this.getCount();
+        ArrayList<MovieInfo> MovieInfoList = new ArrayList<MovieInfo>(numItems);
+        for (int item = 0; item < numItems; item++ )
+        {
+            MovieInfoList.add(this.getItem(item));
+        }
+        return MovieInfoList;
     }
 }
 

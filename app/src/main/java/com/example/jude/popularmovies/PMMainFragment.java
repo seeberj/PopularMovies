@@ -40,6 +40,27 @@ public class PMMainFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+            movieInfoAdapter = new MovieInfoAdapter(getActivity());
+
+        }
+        else
+        {
+          ArrayList<MovieInfo> movieInfoArrayList = savedInstanceState.getParcelableArrayList("movies");
+          movieInfoAdapter = new MovieInfoAdapter(getActivity(), movieInfoArrayList);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //The idea to create a getter for the custom adapter came from Udacity coach Daniel in the following forum post
+        //https://discussions.udacity.com/t/onsaveinstancestate-and-parcelable-question-suggestions-before-i-start-project-2/39475
+        outState.putParcelableArrayList("movies", movieInfoAdapter.getMovieInfoArrayList());
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +68,7 @@ public class PMMainFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_pmmain, container, false);
 
-        movieInfoAdapter = new MovieInfoAdapter(getActivity());
+
 
         GridView gridView = (GridView) rootView.findViewById(R.id.movies_grid);
         gridView.setAdapter(movieInfoAdapter);
@@ -130,9 +151,6 @@ public class PMMainFragment extends Fragment {
             if (params.length == 0) {
                 return null;
             }
-
-            // These two need to be declared outside the try/catch
-            // so that they can be closed in the finally block.
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
