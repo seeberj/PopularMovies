@@ -1,0 +1,2 @@
+Change the MyMovieDbApiKey value in the gradle.properties file to your api key which you can
+create with an account at https://www.themoviedb.org/account/signup.
