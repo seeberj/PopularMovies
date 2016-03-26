@@ -30,7 +30,7 @@ public class DetailActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         Intent intent = getActivity().getIntent();
-        if (intent != null){
+        if (intent != null) {
             //Extract the movie details from the bundle
             Bundle extras = intent.getExtras();
             mTitle = extras.getString("EXTRA_TITLE");

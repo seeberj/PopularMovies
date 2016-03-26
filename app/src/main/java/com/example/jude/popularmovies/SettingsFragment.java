@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
  * Created by Jude on 3/24/2016.
  */
 public class SettingsFragment extends PreferenceFragment
-        implements Preference.OnPreferenceChangeListener{
+        implements Preference.OnPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class SettingsFragment extends PreferenceFragment
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_key)));
 
     }
+
     private void bindPreferenceSummaryToValue(Preference preference) {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(this);

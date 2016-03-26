@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         int menu_id = item.getItemId();
 
         //Start the SettingsActivity
-        if (menu_id == R.id.action_settings){
+        if (menu_id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }

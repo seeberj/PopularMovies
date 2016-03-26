@@ -43,14 +43,12 @@ public class PMMainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+        if (savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
             movieInfoAdapter = new MovieInfoAdapter(getActivity());
 
-        }
-        else
-        {
-          ArrayList<MovieInfo> movieInfoArrayList = savedInstanceState.getParcelableArrayList("movies");
-          movieInfoAdapter = new MovieInfoAdapter(getActivity(), movieInfoArrayList);
+        } else {
+            ArrayList<MovieInfo> movieInfoArrayList = savedInstanceState.getParcelableArrayList("movies");
+            movieInfoAdapter = new MovieInfoAdapter(getActivity(), movieInfoArrayList);
         }
     }
 
@@ -69,11 +67,10 @@ public class PMMainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_pmmain, container, false);
 
 
-
         GridView gridView = (GridView) rootView.findViewById(R.id.movies_grid);
         gridView.setAdapter(movieInfoAdapter);
 
-        gridView.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,10 +98,10 @@ public class PMMainFragment extends Fragment {
     //Call the background task to get the info about the movies
     //based on the preference ( popularity or user rating)
     private void updateMovies() {
-      FetchMoviesTask moviesTask = new FetchMoviesTask();
+        FetchMoviesTask moviesTask = new FetchMoviesTask();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String sortBy = prefs.getString("Order","popular");
-      moviesTask.execute(sortBy);
+        String sortBy = prefs.getString("Order", "popular");
+        moviesTask.execute(sortBy);
     }
 
     @Override
@@ -118,8 +115,7 @@ public class PMMainFragment extends Fragment {
 
         //Extract the movie info from the JSON string
         private List<MovieInfo> getMovieInfoFromJson(String movieListInfoJsonStr)
-                throws JSONException
-        {
+                throws JSONException {
             final String MDB_RESULTS = "results";
             final String MDB_ORIGINAL_TITLE = "original_title";
             final String MDB_POSTER = "poster_path";
@@ -131,9 +127,9 @@ public class PMMainFragment extends Fragment {
             JSONArray movieArray = movieListInfoJson.getJSONArray(MDB_RESULTS);
 
             //Log.v(LOG_TAG, "Number of movies found" + movieArray.length());
-            List<MovieInfo> movieInfo = new ArrayList<MovieInfo> ();
+            List<MovieInfo> movieInfo = new ArrayList<MovieInfo>();
 
-            for(int i = 0; i < movieArray.length(); i++) {
+            for (int i = 0; i < movieArray.length(); i++) {
 
                 JSONObject singleMovieInfo = movieArray.getJSONObject(i);
 
@@ -160,7 +156,7 @@ public class PMMainFragment extends Fragment {
 
             try {
                 // Construct the URL for the MovieDB query
-                final String MOVIEDB_POPULAR_BASE_URL = "http://api.themoviedb.org/3/movie/" + params[0] +"?";
+                final String MOVIEDB_POPULAR_BASE_URL = "http://api.themoviedb.org/3/movie/" + params[0] + "?";
 
                 final String API_KEY_PARAM = "api_key";
 
@@ -169,7 +165,7 @@ public class PMMainFragment extends Fragment {
 
                 URL movieUrl = new URL(builtMovieUri.toString());
 
-               // Log.v(LOG_TAG, "Built MOVIE URI " + builtMovieUri.toString());
+                // Log.v(LOG_TAG, "Built MOVIE URI " + builtMovieUri.toString());
 
                 // Create the request to MovieDB, and open the connection
                 urlConnection = (HttpURLConnection) movieUrl.openConnection();
@@ -199,7 +195,7 @@ public class PMMainFragment extends Fragment {
                 }
                 moviesJsonStr = buffer.toString();
 
-             //   Log.v(LOG_TAG, "Movie string: " + moviesJsonStr);
+                //   Log.v(LOG_TAG, "Movie string: " + moviesJsonStr);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
 
@@ -231,9 +227,9 @@ public class PMMainFragment extends Fragment {
         //After the thread has executed, repopulate the adapter
         @Override
         protected void onPostExecute(List<MovieInfo> movieInfos) {
-            if(movieInfos.size() > 0){
+            if (movieInfos.size() > 0) {
                 movieInfoAdapter.clear();
-                for (int i = 0; i < movieInfos.size(); i++){
+                for (int i = 0; i < movieInfos.size(); i++) {
                     movieInfoAdapter.add(movieInfos.get(i));
                 }
             }
